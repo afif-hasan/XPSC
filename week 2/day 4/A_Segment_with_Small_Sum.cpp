@@ -1,34 +1,36 @@
 #include <bits/stdc++.h>
+#define endl '\n'
+#define fast                     \
+    ios::sync_with_stdio(false); \
+    cin.tie(NULL);
+#define ll long long int
 using namespace std;
 int main()
 {
-    int n;
-    long long s;
+    fast;
+    ll n, s;
     cin >> n >> s;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++)
+    vector<ll> v(n);
+    for (ll i = 0; i < n; i++)
     {
-        cin >> a[i];
+        cin >> v[i];
     }
-
-    long long sum = 0;
-    int l = 0, r = 0, ans = 0;
-
+    ll r = 0, l = 0, ans = 0;
+    ll sum = 0;
     while (r < n)
     {
-        sum += a[r];
+        sum += v[r];
         if (sum <= s)
         {
             ans = max(ans, r - l + 1);
         }
         else
         {
-            sum -= a[l];
+            sum -= v[l];
             l++;
         }
         r++;
     }
-
-    cout << ans << '\n';
+    cout << ans << endl;
     return 0;
 }
