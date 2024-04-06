@@ -8,32 +8,61 @@ using namespace std;
 int main()
 {
     fast;
-    int tst;
+    ll tst;
     cin >> tst;
     while (tst--)
     {
-        int row, col;
+        ll row, col;
         cin >> row >> col;
-        int mat[row][col];
-        for (int i = 0; i < row; i++)
+        ll mat[row][col];
+        for (ll i = 0; i < row; i++)
         {
-            for (int j = 0; j < col; j++)
+            for (ll j = 0; j < col; j++)
             {
                 cin >> mat[i][j];
             }
         }
-        ll sum = 0;
-        for (int i = 0; i < row; i++)
+
+        ll ans = INT_MIN;
+        for (ll i = 0; i < row; i++)
         {
-            for (int j = 0; j < col; j++)
+            for (ll j = 0; j < col; j++)
             {
-                sum += mat[i][j];
-                while (i < row && j < col)
+                ll sum_prim = 0;
+                ll sum_sec = 0;
+                ll l = i, k = j;
+                while (l < row && k < col) // mat[i][j]ekhanei calculated
                 {
-                    sum += mat[]
+                    sum_prim += mat[l][k];
+                    l++;
+                    k++;
                 }
+                l = i - 1, k = j - 1;
+                while (l >= 0 && k >= 0)
+                {
+                    sum_prim += mat[l][k];
+                    l--;
+                    k--;
+                }
+                // sum of secondary diagonal part
+                l = i + 1, k = j - 1;
+                while (l < row && k >= 0)
+                {
+                    sum_sec += mat[l][k];
+                    l++;
+                    k--;
+                }
+                l = i - 1, k = j + 1;
+                while (l >= 0 && k < col)
+                {
+                    sum_sec += mat[l][k];
+                    l--;
+                    k++;
+                }
+                ans = max(ans, sum_prim + sum_sec);
             }
         }
+        cout << ans << endl;
     }
     return 0;
 }
