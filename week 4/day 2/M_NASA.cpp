@@ -10,62 +10,47 @@
     cin >> tst; \
     while (tst--)
 using namespace std;
-const int maxN = (1 << 15);
-vector<int> all_palindromes;
-
-void mark_palindrome()
+vector<ll> palind;
+void make_palindromes()
 {
-    for (int i = 0; i < maxN; i++)
+    for (ll i = 0; i < (1 << 15); i++)
     {
         string s = to_string(i);
-        int len = s.length();
-        bool ok = true;
-        for (int i = 0; i < (len / 2); i++)
-        {
-            if (s[i] != s[len - i - 1])
-            {
-                ok = false;
-                break;
-            }
-        }
-        if (ok)
-        {
-            all_palindromes.push_back(i);
-        }
+        string cpy = s;
+        reverse(cpy.begin(), cpy.end());
+        if (s == cpy)
+            palind.push_back(i);
     }
 }
 int main()
 {
+
     fast;
-    mark_palindrome();
-
-    int t;
-    cin >> t;
-    while (t--)
+    make_palindromes();
+    tst
     {
-        int n;
+        ll n;
         cin >> n;
-        vector<int> cnt(maxN), a;
-        for (int i = 0; i < n; i++)
+        unordered_map<ll, ll> cnt; // faster than map
+        vector<ll> v(n);
+        for (ll i = 0; i < n; i++)
         {
-            int x;
-            cin >> x;
-            cnt[x]++;
-            a.push_back(x);
+
+            cin >> v[i];
+            cnt[v[i]]++;
         }
-
-        long long ans = n;
-
-        for (int i = 0; i < n; i++)
+        ll pair = n; // every elment xoring with itself will provide zero which is palindrome
+        ll len = palind.size();
+        for (ll i = 0; i < n; i++)
         {
-            for (int j = 0; j < all_palindromes.size(); j++)
+            for (ll j = 0; j < len; j++)
             {
-                int curr = (a[i] ^ all_palindromes[j]);
-                ans += cnt[curr];
+                ll res = v[i] ^ palind[j];
+                pair += cnt[res]; // cnt every pairs,
+                // twice for distinct elements and once for itself
             }
         }
-
-        cout << (ans / 2) << '\n';
+        cout << pair / 2 << endl; // that why dividing by 2 will cancel the repeating
     }
     return 0;
 }
