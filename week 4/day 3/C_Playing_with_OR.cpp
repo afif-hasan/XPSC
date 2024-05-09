@@ -17,33 +17,34 @@ int main()
     {
         ll n, k;
         cin >> n >> k;
-
-        ll arr[n];
+        vector<ll> v(n);
         for (ll i = 0; i < n; i++)
-            cin >> arr[i];
-
-        ll odd = 0;
-        for (ll i = 0; i < k; i++)
         {
-            if (arr[i] % 2 != 0)
-                odd++;
+            cin >> v[i];
         }
-
-        ll ans = 0;
-        if (odd > 0)
-            ans++;
-
-        for (ll i = k; i < n; i++)
+        ll l = 0, r = 0, cnt = 0, ans = 0;
+        while (r < n)
         {
-            if (arr[i - k] % 2 != 0)
-                odd--;
-            if (arr[i] % 2 != 0)
-                odd++;
-            if (odd > 0)
-                ans++;
+            if (v[r] % 2 == 1) // odd hole cnt 1 plus hbe
+            {
+                cnt++;
+            }
+            if (r - l + 1 == k) // subarray er size k kina check
+            {
+                if (cnt != 0) // odd elemnt cnt zero na hole ans++
+                {
+                    ans++;
+                }
+                if (v[l] % 2 == 1) // left contribution shoray nibo tai jdi sheta odd hoy then
+                // odd cnt -- hbe
+                {
+                    cnt--;
+                }
+                l++;
+            }
+            r++;
         }
-
-        cout << ans << '\n';
+        cout << ans << endl;
     }
     return 0;
 }
