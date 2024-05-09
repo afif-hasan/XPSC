@@ -1,3 +1,4 @@
+//etake xor er associative law diyeo kora jay,,nicherta bruteforce solution
 #include <bits/stdc++.h>
 #define endl '\n'
 #define fast                     \
@@ -17,31 +18,28 @@ int main()
     {
         int n;
         cin >> n;
-        vector<int> a(n);
+        vector<int> v(n);
         for (int i = 0; i < n; i++)
         {
-            cin >> a[i];
+            cin >> v[i];
         }
-
-        int x = 0;
-        for (int i = 0; i < n; i++)
+        int sum = 0;
+        int x;
+        for (x = 0; x < (1 << 8); x++)
         {
-            x ^= a[i];
+            for (int i = 0; i < n; i++)
+            {
+                sum ^= (v[i] ^ x);
+            }
+            if (sum == 0)
+            {
+                cout << x << endl;
+                break;
+            }
+            else
+                sum = 0; // sum 0 na hole sum 0 kore dicchi
         }
-        for (int i = 0; i < n; i++)
-        {
-            a[i] ^= x;
-        }
-        int y = 0;
-        for (int i = 0; i < n; i++)
-        {
-            y ^= a[i];
-        }
-        if (y == 0)
-        {
-            cout << x << endl;
-        }
-        else
+        if (x == (1 << 8)) // ans na pele -1 print hbe as x er value 1<<8 hwe jbe
         {
             cout << -1 << endl;
         }
