@@ -15,16 +15,10 @@ int main()
     fast;
     tst
     {
-        ll n;
+        int n;
         cin >> n;
-        ll ans = 1;
-        while (ans <= n)
-        {
-            ans *= 2;
-        }
-        ans /= 2;
-        ans--;
-        cout << ans << endl;
+        int pw = __lg(n);
+        cout << (1 << pw) - 1 << endl;
     }
     return 0;
 }
