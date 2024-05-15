@@ -19,50 +19,75 @@ int main()
         cin >> n;
         string s;
         cin >> s;
-
-        string ans = "";
-
-        int goodPairs = 0;
-        int prblm = 0;
-        int l = 0, r = n - 1;
-        while (l < r)
+        int jhamela = 0, thik = 0;
+        for (int i = 0; i < n / 2; i++)
         {
-            if (s[l] == s[r])
+            if (s[i] != s[n - i - 1])
             {
-                goodPairs += 2;
+                jhamela++;
             }
             else
-            {
-                prblm++;
-            }
-            l++, r--;
+                thik += 2;
         }
-
-        for (int i = 0; i <= n; i++)
+        vector<int> t(n + 1);
+        if (n % 2 == 0)
         {
-            int total = i;
-            total -= prblm;
-
-            if (total < 0)
+            for (int i = 0; i < n + 1; i++)
             {
-                ans.push_back('0');
-                continue;
-            }
-
-            total = max((total % 2), total - goodPairs);
-            total = max(0, total - (n % 2));
-
-            if (total == 0)
-            {
-                ans.push_back('1');
-            }
-            else
-            {
-                ans.push_back('0');
+                if (i < jhamela)
+                    t[i] = 0;
+                else if (jhamela % 2 == 0)
+                {
+                    if (i % 2 == 0 && i <= jhamela + thik)
+                    {
+                        t[i] = 1;
+                    }
+                    else
+                        t[i] = 0;
+                }
+                else // jhamela odd
+                {
+                    if (i % 2 == 1 && i <= jhamela + thik)
+                    {
+                        t[i] = 1;
+                    }
+                    else
+                        t[i] = 0;
+                }
             }
         }
-
-        cout << ans << endl;
+        else // n odd
+        {
+            for (int i = 0; i < n + 1; i++)
+            {
+                if (i < jhamela)
+                    t[i] = 0;
+                else if (jhamela % 2 == 0)
+                {
+                    if (i % 2 == 0 && i <= jhamela + thik)
+                        t[i] = 1;
+                    else if (i % 2 == 1 && i <= jhamela + thik + 1)
+                    {
+                        t[i] = 1;
+                    }
+                    else
+                        t[i] = 0;
+                }
+                else // jhamela odd
+                {
+                    if (i % 2 == 0 && i <= jhamela + thik + 1)
+                        t[i] = 1;
+                    else if (i % 2 == 1 && i <= jhamela + thik)
+                        t[i] = 1;
+                    else
+                        t[i] = 0;
+                }
+            }
+        }
+        for (int val : t)
+            cout << val;
+        cout << endl;
     }
+
     return 0;
 }
