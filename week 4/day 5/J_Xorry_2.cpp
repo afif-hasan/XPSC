@@ -17,30 +17,22 @@ int main()
     {
         int n;
         cin >> n;
-        int a = 1;
-        int b = 0;
-        int count = 0;
-        while (a * 2 <= n)
+        int one = 0, cnt = 0;
+        for (int i = 31; i >= 0; i--)
         {
-            a = a * 2;
-            count++;
-        }
-        int ans = 1;
-        bool check = false;
-        for (int i = count - 1; i >= 0; i--)
-        {
-            if ((n & 1 << i))
+            if (((1 << i) & n) != 0)
             {
-                b = b | (1 << i);
-                check = true;
+                one++;
             }
-            else
+            if (one >= 2)
             {
-                if (check)
-                    ans = ans * 2;
+                if (((1 << i) & n) == 0)
+                {
+                    cnt++;
+                }
             }
         }
-        cout << ans << endl;
+        cout << (1 << cnt) << endl;
     }
     return 0;
 }
