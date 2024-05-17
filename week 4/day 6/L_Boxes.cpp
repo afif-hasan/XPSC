@@ -15,35 +15,36 @@ int main()
     fast;
     tst
     {
-        int n;
+        ll n;
         cin >> n;
-        int a[n];
-        for (int i = 0; i < n; i++)
-            cin >> a[i];
-        sort(a, a + n);
-        reverse(a, a + n);
-        multiset<int> m;
-        for (int i = 0; i < n; i++)
+        vector<ll> v(n);
+        for (ll i = 0; i < n; i++)
         {
-            if (!m.size())
+            cin >> v[i];
+        }
+        sort(v.begin(), v.end(), greater<>());
+        priority_queue<ll> pq;
+        for (ll i = 0; i < n; i++)
+        {
+            if (pq.empty())
             {
-                m.insert(a[i]);
+                pq.push(v[i]);
             }
             else
             {
-                int x = *(--m.end());
-                if (x >= a[i])
+                ll x = pq.top();
+                if (v[i] <= pq.top())
                 {
-                    m.erase(--m.end());
-                    m.insert((x ^ a[i]));
+                    pq.pop();
+                    pq.push(v[i] ^ x);
                 }
                 else
                 {
-                    m.insert(a[i]);
+                    pq.push(v[i]);
                 }
             }
         }
-        cout << m.size() << endl;
+        cout << pq.size() << endl;
     }
     return 0;
 }
