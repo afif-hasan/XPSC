@@ -15,13 +15,11 @@ int main()
     fast;
     tst
     {
-
         int a, b;
         cin >> a >> b;
-
-        int xori = a ^ b;
-
-        cout << xori << endl;
+        int mx = max(a, b);
+        int mn = min(a, b);
+        cout << (mn ^ mx) << endl;
     }
     return 0;
 }
