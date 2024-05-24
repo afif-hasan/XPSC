@@ -17,19 +17,18 @@ int main()
     {
         int n;
         cin >> n;
-        n--;
-        int x = log2(n);
-        x = pow(2, x);
-        int ans = 0;
-        int y = n - x;
-        for (int i = x; i <= n; i++)
-            cout << i << " ";
-        cout << y << " ";
-        for (int i = 0; i < x; i++)
+        int mx = n - 1;
+        int k = __lg(mx);
+        while (__lg(mx) == k)
         {
-            if (i == y)
-                continue;
-            cout << i << " ";
+            cout << mx << " ";
+            mx--;
+        }
+        mx = 0;
+        while (__lg(mx) != k)
+        {
+            cout << mx << " ";
+            mx++;
         }
         cout << endl;
     }
