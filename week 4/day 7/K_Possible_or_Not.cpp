@@ -15,21 +15,19 @@ int main()
     fast;
     tst
     {
-        int n;
-        cin >> n;
-        int b;
-        cin >> b;
-        int cur = -1;
-        int i = 0;
-        while (i < n)
+        int n, target;
+        cin >> n >> target;
+        int ans = -1;
+        for (int i = 0; i < n; i++)
         {
-            int ax;
-            cin >> ax;
-            if ((ax & b) == b)
-                cur &= ax;
-            i++;
+            int val;
+            cin >> val;
+            if ((val & target) == target)
+            {
+                ans = ans & val;
+            }
         }
-        if (cur == b)
+        if (ans == target)
             cout << "YES" << endl;
         else
             cout << "NO" << endl;
