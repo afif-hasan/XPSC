@@ -18,12 +18,14 @@ int main()
         int n;
         cin >> n;
         vector<int> v(n);
+        int ans = -1;
         for (int i = 0; i < n; i++)
-            cin >> v[i];
-        int andi = v[0];
-        for (int i = 1; i < n; i++)
-            andi = andi & v[i];
-        cout << andi << endl;
+        {
+            int val;
+            cin >> val;
+            ans = ans & val;
+        }
+        cout << ans << endl;
     }
     return 0;
 }
