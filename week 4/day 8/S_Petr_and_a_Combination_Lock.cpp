@@ -15,31 +15,29 @@ int main()
     fast;
     int n;
     cin >> n;
-    vector<int> arr(n);
+    vector<int> v(n);
     for (int i = 0; i < n; i++)
-        cin >> arr[i];
-
-    bool flag = 0;
-    int m = (1 << n);
-    for (int i = 0; i < m; i++)
+    {
+        cin >> v[i];
+    }
+    int seq = (1 << n); // no of subsequences
+    bool flag = false;
+    for (int i = 0; i < seq; i++) // number of sequences 2^n
     {
         int sum = 0;
-        for (int bits = 0; bits < n; bits++)
+        for (int k = 0; k < n; k++)
         {
-            if (i & (1 << bits))
-                sum += arr[bits];
+            if ((i >> k) & 1) // bit 1 hole clockwise
+            {
+                sum += v[k];
+            }
             else
-                sum -= arr[bits];
+                sum -= v[k]; // bit 0 hole anticlockwise
         }
-
         if (sum % 360 == 0)
-        {
-            flag = 1;
-            break;
-        }
+            flag = true;
     }
-
-    if (flag == 1)
+    if (flag)
         cout << "YES" << endl;
     else
         cout << "NO" << endl;
