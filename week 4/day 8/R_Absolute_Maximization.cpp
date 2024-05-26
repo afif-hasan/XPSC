@@ -17,28 +17,15 @@ int main()
     {
         int n;
         cin >> n;
-        vector<ll> a(n);
+        int mxOR = 0, mnAD = -1;
         for (int i = 0; i < n; i++)
         {
-            cin >> a[i];
+            int val;
+            cin >> val;
+            mxOR |= val;
+            mnAD &= val;
         }
-
-        ll ans = 0;
-        for (int bit = 0; bit <= 12; bit++)
-        {
-            bool one = false, zero = false;
-            for (int i = 0; i < n; i++)
-            {
-                bitset<13> b(a[i]);
-                one |= (b[bit] == 1);
-                zero |= (b[bit] == 0);
-            }
-            if (one and zero)
-            {
-                ans += (1ll << (ll)bit);
-            }
-        }
-        cout << ans << endl;
+        cout << mxOR - mnAD << endl;
     }
     return 0;
 }
