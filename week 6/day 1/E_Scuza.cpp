@@ -22,13 +22,26 @@ int main()
         {
             cin >> stps[i];
         }
+        vector<ll> preSum(n + 1);
+        preSum[0] = 0;
+        for (ll i = 1; i <= n; i++)
+        {
+            preSum[i] = preSum[i - 1] + stps[i - 1];
+        }
+        vector<ll> mx(n);
+        for (ll i = 0; i < n; i++)
+        {
+            if (i == 0)
+                mx[i] = stps[i];
+            else
+                mx[i] = max(mx[i - 1], stps[i]);
+        }
         while (q--)
         {
             ll leg;
             cin >> leg;
-            auto it = upper_bound(stps.begin(), stps.end(), leg);
-            // cout << it - stps.begin() << " ";
-            cout << *it << " ";
+            auto it = upper_bound(mx.begin(), mx.end(), leg) - 1;
+            cout << preSum[it - mx.begin() + 1] << " ";
         }
         cout << endl;
     }
