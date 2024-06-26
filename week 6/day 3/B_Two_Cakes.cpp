@@ -10,29 +10,32 @@
     cin >> tst; \
     while (tst--)
 using namespace std;
+bool possible(int mid, int n, int a, int b)
+{
+    int plates = (a / mid) + (b / mid);
+    if (plates < n)
+        return false;
+    else
+        return true;
+}
 int main()
 {
     fast;
     int n, a, b;
     cin >> n >> a >> b;
-
-    int l = 1, r = min(a, b);
-    int ans = 1;
-
+    int mnpiece = min(a, b);
+    int l = 1, r = mnpiece, ans = -1;
     while (l <= r)
     {
         int mid = (l + r) / 2;
-        if (a / mid + b / mid >= n)
+        if (possible(mid, n, a, b))
         {
-            l = mid + 1;
             ans = mid;
+            l = mid + 1;
         }
         else
-        {
             r = mid - 1;
-        }
     }
-
     cout << ans << endl;
     return 0;
 }
