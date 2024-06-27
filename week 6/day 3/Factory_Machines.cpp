@@ -10,40 +10,46 @@
     cin >> tst; \
     while (tst--)
 using namespace std;
+bool possible(ll mid, vector<ll> times, ll n, ll totalmachine)
+{
+    ll cnt = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        if (mid / times[i] >= totalmachine - cnt)
+            return true;
+        cnt += (mid / times[i]);
+    }
+    if (cnt >= totalmachine)
+        return true;
+    else
+        return false;
+}
 int main()
 {
     fast;
-    int n;
-    ll t;
-    cin >> n >> t;
-    vector<ll> time(n);
-    // time.reserve(n);
-    // ll input = 0;
-    // while (cin >> input)
-    //     time.push_back(input);
-    for (ll i = 0; i < n; i++)
-        cin >> time[i];
-    ll low = 0;
-    ll high = (1e18);
-    ll time_needed = 0;
-    while (low <= high)
+    ll machine, totalMachine;
+
+    cin >> machine >> totalMachine;
+    ll n = machine;
+    vector<ll> times(machine);
+    for (ll i = 0; i < machine; i++)
     {
-        ll mid = (low + high) / 2;
-        ll products_made = 0;
-        for (ll i : time)
+        cin >> times[i];
+    }
+    sort(times.begin(), times.end());
+    ll l = 1, r = 1e18;
+    ll ans = -1;
+    while (l <= r)
+    {
+        ll mid = (l + r) / 2;
+        if (possible(mid, times, n, totalMachine))
         {
-            products_made += mid / i;
-            if (products_made >= t)
-                break;
-        }
-        if (products_made >= t)
-        {
-            time_needed = mid;
-            high = mid - 1;
+            ans = mid;
+            r = mid - 1;
         }
         else
-            low = mid + 1;
+            l = mid + 1;
     }
-    cout << time_needed;
+    cout << ans << endl;
     return 0;
 }
