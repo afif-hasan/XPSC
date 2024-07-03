@@ -10,58 +10,68 @@
     cin >> tst; \
     while (tst--)
 using namespace std;
-int main()
+bool possible(int mid, int n, vector<int> v, string trget, string del)
 {
-    fast;
-    string t, p;
-    cin >> t;
-    cin >> p;
-    int n = t.size(), m = p.size();
-    vector<int> a(n);
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < mid; i++)
     {
-        cin >> a[i];
+        del[v[i] - 1] = '1';
     }
-
-    auto ok = [&](int mid)
+    string s = "";
+    for (char c : del)
     {
-        vector<bool> bad(n + 1);
-        for (int i = 0; i < mid; i++)
+        if (c != '1')
         {
-            bad[a[i]] = true;
+            s.push_back(c);
         }
-        int j = 0;
-        bool found = false;
-        for (int i = 0; i < n; i++)
+    }
+    int m = trget.size();
+    int k = s.size();
+    int j = 0;
+    int cnt = 0;
+    for (int i = 0; i < m; i++)
+    {
+        while (j < k)
         {
-            if (t[i] == p[j] && !bad[i + 1])
+            if (trget[i] == s[j])
+            {
+                j++;
+                cnt++;
+                break;
+            }
+            else
             {
                 j++;
             }
-            if (j == m)
-            {
-                found = true;
-                break;
-            }
         }
-        return found;
-    };
-
-    int l = 0, r = n, mid, ans = 0;
+    }
+    if (cnt == m)
+        return true;
+    else
+        return false;
+}
+int main()
+{
+    fast;
+    string del;
+    cin >> del;
+    string trget;
+    cin >> trget;
+    int n = del.size();
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+    int l = 0, r = n, ans = -1;
     while (l <= r)
     {
-        mid = l + (r - l) / 2;
-        if (ok(mid))
+        int mid = (l + r) / 2;
+        if (possible(mid, n, v, trget, del))
         {
             ans = mid;
             l = mid + 1;
         }
         else
-        {
             r = mid - 1;
-        }
     }
-
-    cout << ans << '\n';
+    cout << ans << endl;
     return 0;
 }
