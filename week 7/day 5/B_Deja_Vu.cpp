@@ -17,26 +17,32 @@ int main()
     {
         ll n, q;
         cin >> n >> q;
-        vector<ll> vec(n);
-        vector<ll> qry(q);
-        for (auto &ite : vec)
-            cin >> ite;
-        for (auto &ite : qry)
-            cin >> ite;
+
+        ll arr[n];
         for (ll i = 0; i < n; i++)
+            cin >> arr[i];
+
+        ll brr[q];
+        for (ll i = 0; i < q; i++)
+            cin >> brr[i];
+
+        set<ll> hs;
+
+        for (ll i = 0; i < q; i++)
         {
-            for (auto ite : qry)
+            if (hs.count(brr[i]))
+                continue;
+            hs.insert(brr[i]);
+            for (ll j = 0; j < n; j++)
             {
-                if (vec[i] % (1 << ite) == 0)
-                {
-                    ll p = ite - 1;
-                    vec[i] = vec[i] + (1 << p);
-                }
+                if (arr[j] % (1 << brr[i]) == 0)
+                    arr[j] += (1 << (brr[i] - 1));
             }
         }
-        for (auto ite : vec)
-            cout << ite << " ";
-        cout << "\n";
+
+        for (auto i : arr)
+            cout << i << " ";
+        cout << '\n';
     }
     return 0;
 }
