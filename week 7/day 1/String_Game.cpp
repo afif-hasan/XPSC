@@ -15,26 +15,26 @@ int main()
     fast;
     tst
     {
-
-        int n, cnt = 0;
+        int n;
+        cin >> n;
         string s;
-        cin >> n >> s;
+        cin >> s;
+        int omil = 0;
         stack<char> st;
-        for (auto i : s)
+        for (char c : s)
         {
-            if (!st.empty() && st.top() != i)
+            if (!st.empty() && st.top() != c)
             {
                 st.pop();
-                cnt++;
+                omil++;
             }
             else
-                st.push(i);
+                st.push(c);
         }
-        if (cnt % 2 == 0)
-            cout << "Ramos";
+        if (omil % 2 == 0)
+            cout << "Ramos" << endl;
         else
-            cout << "Zlatan";
-        cout << endl;
+            cout << "Zlatan" << endl;
     }
     return 0;
 }
