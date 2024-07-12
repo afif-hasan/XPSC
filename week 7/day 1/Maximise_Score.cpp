@@ -17,23 +17,30 @@ int main()
     {
         int n;
         cin >> n;
-        int a[n];
+        int res = INT_MAX;
+        vector<int> v(n);
         for (int i = 0; i < n; i++)
         {
-            cin >> a[i];
+            cin >> v[i];
         }
-        int diff[n];
-        diff[0] = abs(a[1] - a[0]);
-        diff[n - 1] = abs(a[n - 1] - a[n - 2]);
-
-        for (int i = 1; i <= n - 2; i++)
+        for (int i = 0; i < n; i++)
         {
-            int d1 = abs(a[i + 1] - a[i]);
-            int d2 = abs(a[i] - a[i - 1]);
-            diff[i] = max(d1, d2);
+            int val;
+            if (i == 0)
+            {
+                val = abs(v[i] - v[i + 1]);
+            }
+            else if (i == n - 1)
+            {
+                val = abs(v[i] - v[i - 1]);
+            }
+            else
+            {
+                val = max(abs(v[i] - v[i + 1]), abs(v[i] - v[i - 1]));
+            }
+            res = min(res, val);
         }
-        int *ans = min_element(diff, diff + n);
-        cout << *ans << endl;
+        cout << res << endl;
     }
     return 0;
 }
