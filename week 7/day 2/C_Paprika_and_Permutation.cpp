@@ -1,59 +1,86 @@
 #include <bits/stdc++.h>
+#define endl '\n'
+#define fast                     \
+    ios::sync_with_stdio(false); \
+    cin.tie(NULL);
+#define ll long long int
+#define loop for (ll i = 0; i < n; i++)
+#define tst     \
+    ll tst;     \
+    cin >> tst; \
+    while (tst--)
 using namespace std;
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int t;
-    cin >> t;
-    while (t > 0)
+    fast;
+    tst
     {
-        t--;
-        int n;
+        ll n;
         cin >> n;
-        set<int> st;
-        for (int i = 1; i <= n; i++)
+        vector<ll> v(n);
+        for (ll i = 0; i < n; i++)
         {
-            st.insert(i);
+            cin >> v[i];
         }
-        vector<int> rem;
-        for (int i = 0; i < n; i++)
+        sort(v.begin(), v.end());
+        map<ll, ll> mp;
+        ll cnt = 0;
+        vector<ll> change;
+        for (ll i = 0; i < n; i++)
         {
-            int v;
-            cin >> v;
-            if (st.find(v) != st.end())
+            mp[v[i]]++;
+            if (mp[v[i]] == 1 && (v[i] <= n))
             {
-                st.erase(v);
+                cnt++;
             }
             else
             {
-                rem.push_back(v);
+                change.push_back(v[i]);
             }
         }
-        sort(rem.begin(), rem.end());
-        reverse(rem.begin(), rem.end());
-        int pt = 0;
-        bool err = false;
-        for (auto &nx : rem)
+        vector<ll> need;
+        for (ll i = 1; i <= n; i++)
         {
-            auto it = st.end();
-            it--;
-            int ctg = (*it);
-            if (ctg > (nx - 1) / 2)
+            if (mp[i] == 0)
             {
-                err = true;
-                break;
+                need.push_back(i);
             }
-            st.erase(it);
         }
-        if (err)
+        ll sz = need.size();
+        bool flag = true;
+        for (ll i = 0; i < sz; i++)
         {
-            cout << "-1\n";
+            if (change[i] % 2 == 0)
+            {
+                if (need[i] < (change[i] / 2) || need[i] == change[i])
+                {
+                    continue;
+                }
+                else
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            else
+            {
+                if (need[i] <= (change[i] / 2) || need[i] == change[i])
+                {
+                    continue;
+                }
+                else
+                {
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        if (flag)
+        {
+            cout << sz << endl;
         }
         else
-        {
-            cout << rem.size() << '\n';
-        }
+            cout << -1 << endl;
     }
     return 0;
 }
