@@ -15,25 +15,35 @@ int main()
     fast;
     tst
     {
-        int n;
+        ll n;
         cin >> n;
-        int ar[n + 3], br[n + 3];
-        for (int i = 0; i < n; i++)
-            cin >> ar[i];
-        for (int i = 0; i < n; i++)
-            cin >> br[i];
-        sort(ar, ar + n);
-        sort(br, br + n);
-        int ans = 0;
-        for (int i = n - 1; i >= 0; i--)
+        vector<ll> a(n), b(n);
+        for (ll i = 0; i < n; i++)
         {
-            if (ar[i] > br[i] || br[i] - ar[i] > 1)
+            cin >> a[i];
+        }
+        for (ll i = 0; i < n; i++)
+        {
+            cin >> b[i];
+        }
+        sort(a.begin(), a.end());
+        sort(b.begin(), b.end());
+        bool flag = true;
+        for (ll i = 0; i < n; i++)
+        {
+            if (a[i] == b[i])
             {
-                ans = 1;
-                break;
+                continue;
+            }
+            else
+            {
+                if ((a[i] + 1) != b[i])
+                {
+                    flag = false;
+                }
             }
         }
-        if (ans == 0)
+        if (flag)
             cout << "YES" << endl;
         else
             cout << "NO" << endl;
