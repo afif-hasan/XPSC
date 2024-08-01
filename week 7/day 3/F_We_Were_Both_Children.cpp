@@ -17,39 +17,27 @@ int main()
     {
         int n;
         cin >> n;
-        vector<ll> a(n);
+        map<int, int> mp;
         for (int i = 0; i < n; i++)
         {
-            cin >> a[i];
+            int val;
+            cin >> val;
+            mp[val]++;
         }
-
-        vector<ll> freq(n + 2, 0);
-        for (int i = 0; i < n; i++)
-        {
-            if (a[i] > n)
-                continue;
-            freq[a[i]]++;
-        }
-
-        ll ans = 0;
+        map<int, int> mp2;
         for (int i = 1; i <= n; i++)
         {
-            ll here = 0;
-            for (ll x = 1; x * x <= i; x++)
+            for (int j = i; j <= n; j += i)
             {
-                if (i % x == 0)
-                {
-                    here += freq[x];
-                    if (x * x != i)
-                    {
-                        here += freq[i / x];
-                    }
-                }
+                mp2[j] += mp[i];
             }
-            ans = max(ans, here);
         }
-
-        cout << ans << endl;
+        int mx = 0;
+        for (auto it = mp2.begin(); it != mp2.end(); it++)
+        {
+            mx = max(mx, it->second);
+        }
+        cout << mx << endl;
     }
     return 0;
 }
