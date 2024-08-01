@@ -15,62 +15,38 @@ int main()
     fast;
     tst
     {
-        int n, k;
+        ll n, k;
         cin >> n >> k;
-        vector<int> ne, po;
-        int x;
-        for (int i = 0; i < n; i++)
+        vector<ll> pos, neg;
+        ll mxval = INT_MIN;
+        for (ll i = 0; i < n; i++)
         {
+            ll x;
             cin >> x;
-            if (x > 0)
-                po.push_back(x);
+            mxval = max(abs(x), mxval);
             if (x < 0)
-                ne.push_back(-x);
-        }
-        ll ans = 0;
-
-        sort(po.begin(), po.end());
-        sort(ne.begin(), ne.end());
-        reverse(po.begin(), po.end());
-        reverse(ne.begin(), ne.end());
-
-        if (ne.size() == 0)
-        {
-            if (po.size() != 0)
-            {
-                for (int i = 0; i < po.size(); i += k)
-                {
-                    // cout<<po[i]<<endl;
-                    ans += po[i] * 2;
-                }
-                ans -= po[0];
-            }
-            cout << ans << endl;
-        }
-        else if (po.size() == 0)
-        {
-            if (ne.size() != 0)
-            {
-                for (int i = 0; i < ne.size(); i += k)
-                {
-                    ans += ne[i] * 2;
-                }
-                ans -= ne[0];
-            }
-            cout << ans << endl;
-        }
-        else
-        {
-            for (int i = 0; i < po.size(); i += k)
-                ans += po[i] * 2;
-            for (int i = 0; i < ne.size(); i += k)
-                ans += ne[i] * 2;
-            if (po[0] >= ne[0])
-                ans -= po[0];
+                neg.push_back(x);
             else
-                ans -= ne[0];
-            cout << ans << endl;
+                pos.push_back(x);
         }
+        ll szneg = neg.size();
+        ll szpos = pos.size();
+        for (ll i = 0; i < szneg; i++)
+        {
+            neg[i] = abs(neg[i]);
+        }
+        sort(pos.begin(), pos.end(), greater<>());
+        sort(neg.begin(), neg.end(), greater<>());
+        ll ans = 0;
+        for (ll i = 0; i < szneg; i += k)
+        {
+            ans += neg[i] * 2;
+        }
+        for (ll i = 0; i < szpos; i += k)
+        {
+            ans += pos[i] * 2;
+        }
+        cout << ans - mxval << endl;
     }
     return 0;
 }
