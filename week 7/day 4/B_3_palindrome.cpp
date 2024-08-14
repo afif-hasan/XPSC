@@ -13,19 +13,28 @@ using namespace std;
 int main()
 {
     fast;
-    int N;
-    cin >> N;
-    for (int i = 0; i < N; i++)
+    int n;
+    cin >> n;
+    cout << 'a';
+    int cnta = 1, cntb = 0;
+    for (int i = 1; i < n; i++)
     {
-        if (i & 2)
+        if (cnta < 2)
         {
-            cout << 'b';
+            cout << 'a';
+            cnta++;
         }
         else
         {
-            cout << 'a';
+            cout << 'b';
+            cntb++;
+            if (cntb == 2)
+            {
+                cnta = 0;
+                cntb = 0;
+            }
         }
     }
-    cout << endl;
+
     return 0;
 }
