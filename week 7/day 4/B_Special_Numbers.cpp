@@ -5,11 +5,21 @@
     cin.tie(NULL);
 #define ll long long int
 #define loop for (ll i = 0; i < n; i++)
+#define modulo 1000000007
 #define tst     \
     ll tst;     \
     cin >> tst; \
     while (tst--)
 using namespace std;
+ll res(ll n, ll i)
+{
+    ll ans = 1;
+    for (ll j = 1; j <= i; j++)
+    {
+        ans = (ans * n) % modulo;
+    }
+    return ans;
+}
 int main()
 {
     fast;
@@ -17,19 +27,15 @@ int main()
     {
         ll n, k;
         cin >> n >> k;
-        ll p = 1;
-        ll ans = 0;
-        ll INF = 1e9 + 7;
-        for (int j = 0; j < 31; j++)
+        ll total = 0;
+        for (ll i = 0; i <= 32; i++)
         {
-            if (k & (1 << j))
+            if ((k >> i) & 1)
             {
-                ans = (ans + p) % INF;
+                total += res(n, i);
             }
-            p *= n;
-            p %= INF;
         }
-        cout << ans << "\n";
+        cout << total % modulo << endl;
     }
     return 0;
 }
