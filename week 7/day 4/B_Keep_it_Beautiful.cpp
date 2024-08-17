@@ -4,7 +4,7 @@
     ios::sync_with_stdio(false); \
     cin.tie(NULL);
 #define ll long long int
-#define loop for (ll i = 0; i < n; i++)
+#define modulo 1000000007
 #define tst     \
     ll tst;     \
     cin >> tst; \
@@ -15,47 +15,66 @@ int main()
     fast;
     tst
     {
-        ll n, num, flag = 0, first = -1, last = -1;
-        cin >> n;
-        while (n--)
+        ll q;
+        cin >> q;
+        vector<ll> v1, v2;
+        bool logicChange = false;
+        while (q--)
         {
-            cin >> num;
-            if (flag)
+            ll val;
+            cin >> val;
+            if (v1.empty())
             {
-                if (num >= last and num <= first)
-                {
-                    last = num;
-                    cout << 1;
-                }
-                else
-                {
-                    cout << 0;
-                }
+                v1.push_back(val);
+                v2.push_back(1);
             }
             else
             {
-                if (first == -1)
+                if (!logicChange)
                 {
-                    first = num;
-                    last = num;
-                    cout << 1;
-                }
-                else if (num >= last)
-                {
-                    last = num;
-                    cout << 1;
-                }
-                else if (first >= num)
-                {
-                    last = num;
-                    flag = 1;
-                    cout << 1;
+                    if (val >= v1.back())
+                    {
+                        v1.push_back(val);
+                        v2.push_back(1);
+                    }
+                    else
+                    {
+                        if (val <= v1[0])
+                        {
+                            v1.push_back(val);
+                            v2.push_back(1);
+                            logicChange = true;
+                        }
+                        else
+                        {
+                            v2.push_back(0);
+                        }
+                    }
                 }
                 else
                 {
-                    cout << 0;
+                    if (val < v1.back())
+                    {
+                        v2.push_back(0);
+                    }
+                    else
+                    {
+                        if (val <= v1[0])
+                        {
+                            v1.push_back(val);
+                            v2.push_back(1);
+                        }
+                        else
+                        {
+                            v2.push_back(0);
+                        }
+                    }
                 }
             }
+        }
+        for (ll val : v2)
+        {
+            cout << val;
         }
         cout << endl;
     }
