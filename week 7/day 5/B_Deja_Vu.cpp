@@ -4,7 +4,7 @@
     ios::sync_with_stdio(false); \
     cin.tie(NULL);
 #define ll long long int
-#define loop for (ll i = 0; i < n; i++)
+#define modulo 1000000007
 #define tst     \
     ll tst;     \
     cin >> tst; \
@@ -17,32 +17,37 @@ int main()
     {
         ll n, q;
         cin >> n >> q;
-
-        ll arr[n];
+        vector<ll> a(n), x;
         for (ll i = 0; i < n; i++)
-            cin >> arr[i];
-
-        ll brr[q];
-        for (ll i = 0; i < q; i++)
-            cin >> brr[i];
-
-        set<ll> hs;
-
+        {
+            cin >> a[i];
+        }
+        map<ll, ll> mp;
         for (ll i = 0; i < q; i++)
         {
-            if (hs.count(brr[i]))
-                continue;
-            hs.insert(brr[i]);
-            for (ll j = 0; j < n; j++)
+            ll val;
+            cin >> val;
+            mp[val]++;
+            if (mp[val] == 1)
             {
-                if (arr[j] % (1 << brr[i]) == 0)
-                    arr[j] += (1 << (brr[i] - 1));
+                x.push_back(val);
             }
         }
-
-        for (auto i : arr)
-            cout << i << " ";
-        cout << '\n';
+        for (ll val : x)
+        {
+            for (ll i = 0; i < n; i++)
+            {
+                if (a[i] % (1 << val) == 0)
+                {
+                    a[i] = a[i] + (1 << (val - 1));
+                }
+            }
+        }
+        for (ll val : a)
+        {
+            cout << val << " ";
+        }
+        cout << endl;
     }
     return 0;
 }
