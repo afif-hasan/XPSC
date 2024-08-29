@@ -4,7 +4,7 @@
     ios::sync_with_stdio(false); \
     cin.tie(NULL);
 #define ll long long int
-#define loop for (ll i = 0; i < n; i++)
+#define modulo 1000000007
 #define tst     \
     ll tst;     \
     cin >> tst; \
@@ -15,50 +15,53 @@ int main()
     fast;
     tst
     {
-        map<ll, char> ma;
-        ll n, ind;
         string s;
         cin >> s;
-        n = (ll)s.size();
-        stack<ll> upper, lower;
-        for (ll i = 0; i < n; i++)
+        int len = s.size();
+        stack<pair<int, char>> caps, smalls;
+        for (int i = 0; i < len; i++)
         {
-            if (s[i] == 'B')
+            if (s[i] != 'b' && s[i] != 'B')
             {
-                if (!upper.empty())
+                if (s[i] >= 'a' && s[i] <= 'z')
                 {
-                    ind = upper.top();
-                    ma[ind] = '$';
-                    upper.pop();
+                    smalls.push({i, s[i]});
                 }
-                continue;
-            }
-            if (s[i] == 'b')
-            {
-                if (!lower.empty())
+                else
                 {
-                    ind = lower.top();
-                    ma[ind] = '$';
-                    lower.pop();
+                    caps.push({i, s[i]});
                 }
-                continue;
             }
-            ma[i] = s[i];
-            if (isupper(s[i]))
+            else if (s[i] == 'b')
             {
-                upper.push(i);
+                if (!smalls.empty())
+                {
+                    smalls.pop();
+                }
             }
             else
             {
-                lower.push(i);
+                if (!caps.empty())
+                {
+                    caps.pop();
+                }
             }
         }
-        for (ll i = 0; i < n; i++)
+        vector<pair<int, char>> v;
+        while (!smalls.empty())
         {
-            if (ma.count(i) and ma[i] != '$')
-            {
-                cout << ma[i];
-            }
+            v.push_back({smalls.top().first, smalls.top().second});
+            smalls.pop();
+        }
+        while (!caps.empty())
+        {
+            v.push_back({caps.top().first, caps.top().second});
+            caps.pop();
+        }
+        sort(v.begin(), v.end());
+        for (auto pr : v)
+        {
+            cout << pr.second;
         }
         cout << endl;
     }
