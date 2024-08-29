@@ -4,66 +4,79 @@
     ios::sync_with_stdio(false); \
     cin.tie(NULL);
 #define ll long long int
-#define loop for (ll i = 0; i < n; i++)
+#define modulo 1000000007
 #define tst     \
     ll tst;     \
     cin >> tst; \
     while (tst--)
 using namespace std;
-ll InvCnt(vector<int> a, int n)
-{
-    ll res = 0, one = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] == 1)
-        {
-            one++;
-        }
-        else
-        {
-            res += one;
-        }
-    }
-    return res;
-}
 int main()
 {
     fast;
     tst
     {
-        int n;
+        ll n;
         cin >> n;
-        vector<int> a(n);
-        for (int i = 0; i < n; i++)
+        vector<pair<ll, ll>> v(n);
+        for (ll i = 0; i < n; i++)
         {
-            cin >> a[i];
+            ll val;
+            cin >> val;
+            if (val == 1)
+            {
+                v[i].first = 1;
+                if (i == 0)
+                    v[i].second = 1;
+                else
+                    v[i].second = v[i - 1].second + 1;
+            }
+            else
+            {
+                v[i].first = 0;
+                if (i == 0)
+                    v[i].second = 0;
+                else
+                    v[i].second = v[i - 1].second;
+            }
         }
+        ll nochange = 0, zerochange = 0, onechange = 0;
+        bool forzero = false, forone = false;
+        for (ll i = 0; i < n; i++)
+        {
+            if (v[i].first == 0)
+            {
+                nochange += v[i].second;
 
-        ll ans = InvCnt(a, n);
-        int id = -1;
-        for (int i = 0; i < n; i++)
-        {
-            if (a[i] == 0)
-            {
-                a[i] = 1;
-                id = i;
-                break;
+                if (forzero)
+                {
+                    zerochange += v[i].second + 1;
+                }
+                forzero = true;
             }
         }
-        ans = max(ans, InvCnt(a, n));
-        if (id != -1)
+        for (ll i = n - 1; i >= 0; i--)
         {
-            a[id] = 0;
-        }
-        for (int i = n - 1; i >= 0; i--)
-        {
-            if (a[i] == 1)
+            if (!forone)
             {
-                a[i] = 0;
-                break;
+                if (v[i].first == 0)
+                {
+                    onechange += v[i].second - 1;
+                }
+                else
+                {
+                    forone = true;
+                    onechange += v[i].second - 1;
+                }
+            }
+            else
+            {
+                if (v[i].first == 0)
+                {
+                    onechange += v[i].second;
+                }
             }
         }
-        ans = max(ans, InvCnt(a, n));
+        ll ans = max({nochange, onechange, zerochange});
         cout << ans << endl;
     }
     return 0;
