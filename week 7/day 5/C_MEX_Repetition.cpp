@@ -4,7 +4,7 @@
     ios::sync_with_stdio(false); \
     cin.tie(NULL);
 #define ll long long int
-#define loop for (ll i = 0; i < n; i++)
+#define modulo 1000000007
 #define tst     \
     ll tst;     \
     cin >> tst; \
@@ -15,42 +15,40 @@ int main()
     fast;
     tst
     {
-        ll n, k, b, missed, last;
+        ll n, k;
         cin >> n >> k;
-        vector<ll> v, t;
+        vector<ll> v(n + 1);
+        map<ll, ll> mp;
         for (ll i = 0; i < n; i++)
         {
-            cin >> b;
-            v.push_back(b);
+            cin >> v[i];
+            mp[v[i]]++;
         }
-        t = v;
-        sort(t.begin(), t.end());
-        missed = n;
-        for (ll i = 0; i < n; i++)
+        for (ll i = 0; i <= n; i++)
         {
-            if (t[i] != i)
+            if (mp[i] == 0)
             {
-                missed = i;
+                v[n] = i;
                 break;
             }
         }
-        ll bkp;
+        ll shft = k % (n + 1);
+
+        vector<ll> ans(n + 1);
+        for (ll i = 0; i <= n; i++)
+        {
+            if (i + shft <= n)
+            {
+                ans[i + shft] = v[i];
+            }
+            else
+            {
+                ans[(i + shft) - n - 1] = v[i];
+            }
+        }
         for (ll i = 0; i < n; i++)
         {
-            bkp = v[i];
-            v[i] = missed;
-            missed = bkp;
-        }
-        v.push_back(missed);
-
-        last = (k - 1) % (n + 1);
-        for (ll i = (n + 1 - last); i < (n + 1); i++)
-        {
-            cout << v[i] << " ";
-        }
-        for (ll i = 0; i < (n - last); i++)
-        {
-            cout << v[i] << " ";
+            cout << ans[i] << " ";
         }
         cout << endl;
     }
