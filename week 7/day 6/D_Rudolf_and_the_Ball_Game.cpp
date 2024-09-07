@@ -4,7 +4,7 @@
     ios::sync_with_stdio(false); \
     cin.tie(NULL);
 #define ll long long int
-#define loop for (ll i = 0; i < n; i++)
+#define modulo 1000000007
 #define tst     \
     ll tst;     \
     cin >> tst; \
@@ -15,79 +15,55 @@ int main()
     fast;
     tst
     {
-        int n, m, x;
-        cin >> n >> m >> x;
-
-        vector<int> vis(n + 1, 0);
-        vis[x - 1] = 1;
-        while (m--)
+        ll n, q, src;
+        cin >> n >> q >> src;
+        queue<ll> que;
+        que.push(src);
+        while (q--)
         {
-            int d;
-            cin >> d;
-            char c;
-            cin >> c;
-            if (c == '?')
+            ll dist;
+            char dir;
+            cin >> dist >> dir;
+            set<ll> s;
+            while (!que.empty())
             {
-                vector<int> q;
-                for (int i = 0; i < n; i++)
+                ll pr = que.front();
+                que.pop();
+                if (dir == '?' || dir == '0')
                 {
-                    if (vis[i])
+                    ll ins = (pr + dist) % n;
+                    if (ins == 0)
                     {
-                        q.push_back(i);
-                        vis[i] = 0;
+                        s.insert(n);
                     }
+                    else
+                        s.insert(ins);
                 }
-                for (int i : q)
+                if (dir == '?' || dir == '1')
                 {
-                    vis[(i + d) % n] = 1;           // clockwise
-                    vis[((i - d) % n + n) % n] = 1; // counter clickwise
+                    ll ins = (pr - dist + n) % n;
+                    if (ins == 0)
+                    {
+                        s.insert(n);
+                    }
+                    else
+                        s.insert(ins);
                 }
             }
-            else if (c == '0')
+            for (auto val : s)
             {
-                vector<int> q;
-                for (int i = 0; i < n; i++)
-                {
-                    if (vis[i])
-                    {
-                        q.push_back(i);
-                        vis[i] = 0;
-                    }
-                }
-                for (int i : q)
-                {
-                    vis[(i + d) % n] = 1;
-                }
-            }
-            else
-            {
-                vector<int> q;
-                for (int i = 0; i < n; i++)
-                {
-                    if (vis[i])
-                    {
-                        q.push_back(i);
-                        vis[i] = 0;
-                    }
-                }
-                for (int i : q)
-                {
-                    vis[((i - d) % n + n) % n] = 1;
-                }
+                que.push(val);
             }
         }
-
-        int ans = 0;
-        for (int i = 0; i < n + 1; i++)
+        set<ll> res;
+        while (!que.empty())
         {
-            ans += (vis[i] == 1);
+            res.insert(que.front());
+            que.pop();
         }
-        cout << ans << endl;
-        for (int i = 0; i < n; i++)
-        {
-            if (vis[i])
-                cout << i + 1 << " ";
-        }
+        cout << res.size() << endl;
+        for (auto val : res)
+            cout << val << " ";
         cout << endl;
     }
     return 0;
